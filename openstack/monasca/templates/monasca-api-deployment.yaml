@@ -70,8 +70,22 @@ spec:
                 - /bin/sh
                 - -c
                 - nc -z kafka {{.Values.monasca_kafka_port_internal}}
+          resources:
+            requests:
+              memory: "500Mi"
+#              cpu: "200m"
+            limits:
+              memory: "1Gi"
+#              cpu: "500m"
         - name: memcached
           image: memcached:alpine
+          resources:
+            requests:
+              memory: "20Mi"
+#              cpu: "20m"
+            limits:
+              memory: "50Mi"
+#              cpu: "50m"
         - name: monasca-agent-forwarder
           image: {{.Values.docker_repo}}/monasca-agent:{{.Values.image_version_monasca_agent}}
           imagePullPolicy: IfNotPresent
@@ -96,6 +110,13 @@ spec:
               name: monasca-bin
             - mountPath: /monasca-etc
               name: monasca-etc
+          resources:
+            requests:
+              memory: "30Mi"
+#              cpu: "20m"
+            limits:
+              memory: "100Mi"
+#              cpu: "50m"
         - name: monasca-agent-statsd
           image: {{.Values.docker_repo}}/monasca-agent:{{.Values.image_version_monasca_agent}}
           imagePullPolicy: IfNotPresent
@@ -125,3 +146,10 @@ spec:
               name: monasca-bin
             - mountPath: /monasca-etc
               name: monasca-etc
+          resources:
+            requests:
+              memory: "20Mi"
+#              cpu: "20m"
+            limits:
+              memory: "50Mi"
+#              cpu: "50m"

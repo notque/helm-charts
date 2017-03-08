@@ -49,6 +49,9 @@ spec:
     spec:
       nodeSelector:
         zone: farm
+      volumes:
+      - name: confdir
+        emptyDir: {}
       containers:
         - name: zk
           image: {{.Values.docker_repo}}/monasca-zookeeper-cluster:{{.Values.image_version_monasca_zookeeper_cluster}}
@@ -95,9 +98,14 @@ spec:
               mountPath: /var/lib/zookeeper
             - name: confdir
               mountPath: /conf-dir
-      volumes:
-      - name: confdir
-        emptyDir: {}
+          resources:
+            requests:
+              memory: "1Gi"
+#              cpu: "250m"
+            limits:
+              memory: "3Gi"
+#              cpu: "1000m"
+
   volumeClaimTemplates:
   - metadata:
       name: datadir

@@ -105,6 +105,13 @@ spec:
                 - /monasca-bin/mysql-liveness
             timeoutSeconds: 30
             initialDelaySeconds: 120
+          resources:
+            requests:
+              memory: "500Mi"
+#              cpu: "500m"
+            limits:
+              memory: "2Gi"
+#              cpu: "1000m"
         - name: fluent
           image: {{.Values.docker_repo}}/monasca-fluent:{{.Values.image_version_monasca_fluent}}
           imagePullPolicy: IfNotPresent
@@ -124,6 +131,13 @@ spec:
               mountPath: /monasca-etc
             - name: logdir
               mountPath: /var/log/mysql
+          resources:
+            requests:
+              memory: "100Mi"
+#              cpu: "200m"
+            limits:
+              memory: "200Mi"
+#              cpu: "500m"
   volumeClaimTemplates:
   - metadata:
       name: datadir
